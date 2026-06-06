@@ -3,10 +3,14 @@ on:
   push:
     branches:
       - main
+permissions:
+  contents: write
+  pull-requests: write
 jobs:
   update-readme:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v4
       - name: Update Contributions List
         run: |
           sed -i "$ a some text" README.md
