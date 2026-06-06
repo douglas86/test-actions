@@ -13,7 +13,7 @@ jobs:
       - uses: actions/checkout@v6
       - name: Update Contributions List
         run: |
-          sed -i "/Contributors/a [![${{ github.actor }}](https:://github.com/${{ github.actor }}.png)](https://github.com/${{ github.actor }})" README.md
+          sed -i "/Contributors/a [[!${{ github.actor }}](https:://github.com/${{ github.actor }}.png)](https://github.com/${{ github.actor }})" README.md
           git config --local user.email "action@github.com"
           git config --local user.name "Github Action"
           git add README.md
