@@ -13,4 +13,4 @@ jobs:
       - uses: actions/checkout@v6
       - name: Update Contributions List
         run: |
-          sed -i "$ a some text" README.md
+          sed -i '/Contributors/a You added me' README.md
