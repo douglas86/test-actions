@@ -6,3 +6,7 @@ on:
 jobs:
   update-readme:
     runs-on: ubuntu-latest
+    steps:
+      - name: Update Contributions List
+        run: |
+          sed -i "$ a some text" README.md
