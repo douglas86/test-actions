@@ -13,10 +13,31 @@ jobs:
       - uses: actions/checkout@v6
       - name: Update Contributions List
         run: |
-          PAYLOAD='<img src="https://github.com\/${{ github.actor }}.png" width="50" height="50" class="avatar avatar-user" alt="${{ github.actor }}">'
-          sed -i "\|Contributors|a $PAYLOAD" README.md
-          git config --local user.email "action@github.com"
-          git config --local user.name "Github Action"
+          # create the variables
+          ACTOR="${{ github.actor }}"
+          BOT="actions-user"
+          
+          # Function to check and add a contributor
+          add_contributor_if_missing() {
+            local username=$1
+          
+            local payload="<img src=\"https://github.com/${username}.png\" width=\"50\" height=\"50\" class=\"avatar avatar-user\" alt=\"${username}\">"
+          
+            if grep -q "alt=\"${username}\"" README.md; then
+              echo "Contributor '${username}' is already present in README.md. Skipping."
+            else
+              echo "Contributor '${username}' not found. Adding to list..."
+              sed -i "\|Contributors|a ${payload}" README.md
+            fi
+          }
+          
+          add_contributor_if_missing "$ACTOR"
+          add_contributor_if_missing "$BOT"
+          
           git add README.md
-          git commit -m "docs: update contributors in README"
-          git push origin HEAD:${{ github.ref_name }}
+          if ! git diff --cached --quiet; then
+            git commit -m "docs: update contributors in README"
+            git push origin HEAD:${{ github.ref_name }}
+          else
+            echo "No new contributors to add. Working tree clean."
+          fi
