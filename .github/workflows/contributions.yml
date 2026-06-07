@@ -36,6 +36,9 @@ jobs:
           
           git add README.md
           if ! git diff --cached --quiet; then
+            git config --local user.email "action@github.com"
+            git config --local user.name "Github Action"
+            git add README.md
             git commit -m "docs: update contributors in README"
             git push origin HEAD:${{ github.ref_name }}
           else
