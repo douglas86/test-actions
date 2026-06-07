@@ -26,8 +26,8 @@ jobs:
             if grep -q "alt=\"${username}\"" README.md; then
               echo "Contributor '${username}' is already present in README.md. Skipping."
             else
-              echo "Contributor '${username}' not found. Adding to list..."
-              sed -i "\|Contributors|a ${payload}" README.md
+              echo "Contributor '${username}' side-by-side..."
+              sed -i "s||${payload} |" README.md
             fi
           }
           
