@@ -17,8 +17,8 @@ jobs:
           ACTOR="${{ github.actor }}"
           BOT="actions-user"
                
-          PAYLOAD_ACTOR="<a href=\"https://github.com/${ACTOR}\" target=\"_blank\"><img src=\"https://github.com/${ACTOR}.png\" width=\"50\" height=\"50\" class=\"avatar avatar-user\" alt=\"${ACTOR}\"></a>"
-          PAYLOAD_BOT="<a href=\"https://github.com/${BOT}\" target=\"_blank\"><img src=\"https://github.com/${BOT}.png\" width=\"50\" height=\"50\" class=\"avatar avatar-user\" alt=\"${BOT}\"></a>"
+          PAYLOAD_ACTOR="<a href=\"https://github.com/${ACTOR}\"><img src=\"https://github.com/${ACTOR}.png\" width=\"50\" height=\"50\" class=\"avatar avatar-user\" alt=\"${ACTOR}\"></a>"
+          PAYLOAD_BOT="<a href=\"https://github.com/${BOT}\"><img src=\"https://github.com/${BOT}.png\" width=\"50\" height=\"50\" class=\"avatar avatar-user\" alt=\"${BOT}\"></a>"
                
           COMBINED_PAYLOAD=""
                
