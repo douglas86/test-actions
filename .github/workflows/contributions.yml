@@ -59,13 +59,13 @@ jobs:
 #          add_contributor_if_missing "$ACTOR"
 #          add_contributor_if_missing "$BOT"
           
-          git add README.md
+#          git add README.md
           if ! git diff --cached --quiet; then
-            git config --local user.email "action@github.com"
-            git config --local user.name "Github Action"
+            git config --local user.email 'action@github.com'
+            git config --local user.name 'Github Action'
             git add README.md
             git commit -m 'docs: update contributors in README'
             git push origin HEAD:${{ github.ref_name }}
           else
-            echo "No new contributors to add. Working tree clean."
+            echo 'No new contributors to add. Working tree clean.'
           fi
