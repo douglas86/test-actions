@@ -64,7 +64,7 @@ jobs:
             git config --local user.email "action@github.com"
             git config --local user.name "Github Action"
             git add README.md
-            git commit -m "docs: update contributors in README"
+            git commit -m 'docs: update contributors in README'
             git push origin HEAD:${{ github.ref_name }}
           else
             echo "No new contributors to add. Working tree clean."
