@@ -27,7 +27,7 @@ jobs:
               echo "Contributor '${username}' is already present in README.md. Skipping."
             else
               echo "Contributor '${username}' side-by-side..."
-              sed -i "s|.*Contributors.*|& ${payload}|" README.md
+              sed -i "s|.*Contributors.*|&\n ${payload}|" README.md
             fi
           }
           
