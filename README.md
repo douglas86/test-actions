@@ -1,5 +1,3 @@
 # test
 
 ## Contributors
-${payload}
-${payload}
