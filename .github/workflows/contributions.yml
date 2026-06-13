@@ -16,24 +16,48 @@ jobs:
           # create the variables
           ACTOR="${{ github.actor }}"
           BOT="actions-user"
+               
+          PAYLOAD_ACTOR="<img src=\"https://github.com/${ACTOR}.png\" width=\"50\" height=\"50\" class=\"avatar avatar-user\" alt=\"${ACTOR}\">"
+          PAYLOAD_BOT="<img src=\"https://github.com/${BOT}.png\" width=\"50\" height=\"50\" class=\"avatar avatar-user\" alt=\"${BOT}\">"
+               
+          COMBINED_PAYLOAD=""
+               
+          if ! grep -q "alt=\"${ACTOR}\"" README.md; then
+               echo "Adding ${ACTOR} to payload..."
+               COMBINED_PAYLOAD="${COMBINED_PAYLOAD}${PAYLOAD_ACTOR} "
+          fi
+               
+          if ! grep -q "alt=\"${BOT}\"" README.md; then
+               echo "Adding ${BOT} to payload..."
+               COMBINED_PAYLOAD="${COMBINED_PAYLOAD}${PAYLOAD_BOT}"
+          fi
+               
+          if [ ! -z "$COMBINED_PAYLOAD" ]; then
+               echo "Writing new contributors side-by-side..."
+               LINE_NUM=$(grep -n "Contributors" README.md | cut -d: -f1)
+               awk -v ln="$LINE_NUM" -v pl="$COMBINED_PAYLOAD" 'NR==ln {print $0; print pl; next} 1' README.md > temp.md && mv temp.md README.md
+          else
+               echo "No new contributors to add. Skipping file write."
+          fi
           
-          # Function to check and add a contributor
-          add_contributor_if_missing() {
-            local username=$1
-          
-            local payload="<img src=\"https://github.com/${username}.png\" width=\"50\" height=\"50\" class=\"avatar avatar-user\" alt=\"${username}\">"
-          
-            if grep -q "alt=\"${username}\"" README.md; then
-              echo "Contributor '${username}' is already present in README.md. Skipping."
-            else
-              echo "Contributor '${username}' side-by-side..."
-            
-              local line_num=$(grep -n "Contributors" README.md | cut -d: -f1)
-              awk -v ln="$line_num" -v pl="$payload" 'NR==ln {print $0; print pl; next} 1' README.md > temp.md && mv temp.md README.md
-            fi
-          }
-          
-          add_contributor_if_missing "$ACTOR" && add_contributor_if_missing "$BOT"
+#          # Function to check and add a contributor
+#          add_contributor_if_missing() {
+#            local username=$1
+#
+#            local payload="<img src=\"https://github.com/${username}.png\" width=\"50\" height=\"50\" class=\"avatar avatar-user\" alt=\"${username}\">"
+#
+#            if grep -q "alt=\"${username}\"" README.md; then
+#              echo "Contributor '${username}' is already present in README.md. Skipping."
+#            else
+#              echo "Contributor '${username}' side-by-side..."
+#
+#              local line_num=$(grep -n "Contributors" README.md | cut -d: -f1)
+#              awk -v ln="$line_num" -v pl="$payload" 'NR==ln {print $0; print pl; next} 1' README.md > temp.md && mv temp.md README.md
+#            fi
+#          }
+#
+#          add_contributor_if_missing "$ACTOR"
+#          add_contributor_if_missing "$BOT"
           
           git add README.md
           if ! git diff --cached --quiet; then
