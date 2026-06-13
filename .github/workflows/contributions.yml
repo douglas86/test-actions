@@ -23,21 +23,21 @@ jobs:
           COMBINED_PAYLOAD=""
                
           if ! grep -q "alt=\"${ACTOR}\"" README.md; then
-               echo "Adding ${ACTOR} to payload..."
-               COMBINED_PAYLOAD="${COMBINED_PAYLOAD}${PAYLOAD_ACTOR} "
+            echo "Adding ${ACTOR} to payload..."
+            COMBINED_PAYLOAD="${COMBINED_PAYLOAD}${PAYLOAD_ACTOR} "
           fi
                
           if ! grep -q "alt=\"${BOT}\"" README.md; then
-               echo "Adding ${BOT} to payload..."
-               COMBINED_PAYLOAD="${COMBINED_PAYLOAD}${PAYLOAD_BOT}"
+            echo "Adding ${BOT} to payload..."
+            COMBINED_PAYLOAD="${COMBINED_PAYLOAD}${PAYLOAD_BOT}"
           fi
                
           if [ ! -z "$COMBINED_PAYLOAD" ]; then
-               echo "Writing new contributors side-by-side..."
-               LINE_NUM=$(grep -n "Contributors" README.md | cut -d: -f1)
-               awk -v ln="$LINE_NUM" -v pl="$COMBINED_PAYLOAD" 'NR==ln {print $0; print pl; next} 1' README.md > temp.md && mv temp.md README.md
+            echo "Writing new contributors side-by-side..."
+            LINE_NUM=$(grep -n "Contributors" README.md | cut -d: -f1)
+            awk -v ln="$LINE_NUM" -v pl="$COMBINED_PAYLOAD" 'NR==ln {print $0; print pl; next} 1' README.md > temp.md && mv temp.md README.md
           else
-               echo "No new contributors to add. Skipping file write."
+            echo "No new contributors to add. Skipping file write."
           fi
           
 #          # Function to check and add a contributor
@@ -59,7 +59,7 @@ jobs:
 #          add_contributor_if_missing "$ACTOR"
 #          add_contributor_if_missing "$BOT"
           
-#          git add README.md
+          git add README.md
           if ! git diff --cached --quiet; then
             git config --local user.email 'action@github.com'
             git config --local user.name 'Github Action'
