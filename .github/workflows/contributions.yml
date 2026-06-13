@@ -33,8 +33,7 @@ jobs:
             fi
           }
           
-          add_contributor_if_missing "$ACTOR"
-          add_contributor_if_missing "$BOT"
+          add_contributor_if_missing "$ACTOR" && add_contributor_if_missing "$BOT"
           
           git add README.md
           if ! git diff --cached --quiet; then
